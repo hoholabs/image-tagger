@@ -8,14 +8,29 @@ function App() {
     const [puzzle, setPuzzle] = useState(playground);
     //later, to add more puzzles, add a default/info screen
 
+    const [isActive, setIsActive] = useState(false);
+
     const changePuzzle = (puzzle) => {
         setPuzzle(puzzle);
     };
 
+    const startPuzzle = () => {
+        setIsActive(true);
+    };
+
     return (
         <div className="App">
-            <Nav changePuzzle={changePuzzle} puzzle={puzzle} />
-            <Puzzle puzzle={puzzle} />
+            <Nav
+                changePuzzle={changePuzzle}
+                puzzle={puzzle}
+                startPuzzle={startPuzzle}
+                isActive={isActive}
+            />
+            <Puzzle
+                puzzle={puzzle}
+                startPuzzle={startPuzzle}
+                isActive={isActive}
+            />
         </div>
     );
 }
