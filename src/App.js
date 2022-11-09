@@ -6,6 +6,7 @@ import playground from './Puzzles/Playground';
 
 function App() {
     const [puzzle, setPuzzle] = useState(playground);
+    //later, to add more puzzles, add a default/info screen
 
     const changePuzzle = (puzzle) => {
         setPuzzle(puzzle);
@@ -13,7 +14,7 @@ function App() {
 
     return (
         <div className="App">
-            <Nav changePuzzle={changePuzzle} />
+            <Nav changePuzzle={changePuzzle} puzzle={puzzle} />
             <Puzzle puzzle={puzzle} />
         </div>
     );
