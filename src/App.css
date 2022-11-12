@@ -6,7 +6,7 @@ nav {
     margin-bottom: auto;
     justify-items: center;
 }
-#key {
+nav #key {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     margin-top: auto;
@@ -16,9 +16,19 @@ nav {
     border: solid rgb(119, 119, 45) 2px;
 }
 
-#key span {
+nav #key span {
     /* justify-self: center; */
     grid-column: 1/-1;
+}
+
+nav #timer {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+nav #highscore {
+    background-color: red;
 }
 
 #puzzle {

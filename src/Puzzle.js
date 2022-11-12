@@ -1,11 +1,18 @@
 import React from 'react';
 
 function Puzzle(props) {
-    console.log(props);
+    const sendCoords = (event) => {
+        console.log(event.nativeEvent.offsetX);
+        console.log(event.nativeEvent.offsetY);
+    };
     return (
         <div id="puzzle">
             {props.isActive && (
-                <img src={props.puzzle.img} alt="hidden object puzzle"></img>
+                <img
+                    onClick={sendCoords}
+                    src={props.puzzle.img}
+                    alt="hidden object puzzle"
+                ></img>
             )}
         </div>
     );

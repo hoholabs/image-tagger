@@ -24,9 +24,12 @@ function Nav(props) {
                 <img src={props.puzzle.legendC} alt="hint C"></img>
             </div>
             <div id="timer">
-                {time} <button onClick={props.startPuzzle}>START</button>
+                {props.isActive && <span>{time}</span>}
+                {!props.isActive && (
+                    <button onClick={props.startPuzzle}>START</button>
+                )}
             </div>
-            <div id="highschore">highscore</div>
+            <div id="highscore">highscore</div>
         </nav>
     );
 }
