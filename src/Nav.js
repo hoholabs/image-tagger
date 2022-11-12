@@ -21,7 +21,7 @@ function Nav(props) {
                 <span>FIND THESE</span>
                 <div className="legendPicDiv">
                     <img src={props.puzzle.legendA} alt="hint A"></img>
-                    {props.puzzle.coordsA[0] && (
+                    {props.legend[0] && (
                         <img
                             className="checkmark"
                             alt="checkmark"
@@ -31,7 +31,7 @@ function Nav(props) {
                 </div>
                 <div className="legendPicDiv">
                     <img src={props.puzzle.legendB} alt="hint B"></img>
-                    {props.puzzle.coordsB[0] && (
+                    {props.legend[1] && (
                         <img
                             className="checkmark"
                             alt="checkmark"
@@ -41,7 +41,7 @@ function Nav(props) {
                 </div>
                 <div className="legendPicDiv">
                     <img src={props.puzzle.legendC} alt="hint C"></img>
-                    {props.puzzle.coordsC[0] && (
+                    {props.legend[2] && (
                         <img
                             className="checkmark"
                             alt="checkmark"

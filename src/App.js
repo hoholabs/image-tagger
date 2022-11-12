@@ -6,9 +6,9 @@ import playground from './Puzzles/Playground';
 
 function App() {
     const [puzzle, setPuzzle] = useState(playground);
-    //later, to add more puzzles, add a default/info screen
-
+    const [legend, setLegend] = useState([false, false, false]);
     const [isActive, setIsActive] = useState(false);
+    //later, to add more puzzles, add a default/info screen
 
     const changePuzzle = (puzzle) => {
         setPuzzle(puzzle);
@@ -18,11 +18,18 @@ function App() {
         setIsActive(true);
     };
 
+    const changeLegend = (position) => {
+        let oldLegend = legend;
+        oldLegend[position] = true;
+        setLegend(oldLegend);
+    };
+
     return (
         <div className="App">
             <Nav
                 changePuzzle={changePuzzle}
                 puzzle={puzzle}
+                legend={legend}
                 startPuzzle={startPuzzle}
                 isActive={isActive}
             />
@@ -30,6 +37,7 @@ function App() {
                 puzzle={puzzle}
                 startPuzzle={startPuzzle}
                 isActive={isActive}
+                changeLegend={changeLegend}
             />
         </div>
     );

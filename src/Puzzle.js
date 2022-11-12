@@ -2,8 +2,28 @@ import React from 'react';
 
 function Puzzle(props) {
     const sendCoords = (event) => {
-        console.log(event.nativeEvent.offsetX);
-        console.log(event.nativeEvent.offsetY);
+        let coordsArray = [
+            props.puzzle.coordsA,
+            props.puzzle.coordsB,
+            props.puzzle.coordsC
+        ];
+        let clickCoords = [
+            event.nativeEvent.offsetX,
+            event.nativeEvent.offsetY
+        ];
+
+        for (let index = 0; index < coordsArray.length; index++) {
+            const coordSet = coordsArray[index];
+            if (
+                coordSet[0] < clickCoords[0] &&
+                clickCoords[0] < coordSet[1] &&
+                coordSet[2] < clickCoords[1] &&
+                clickCoords[1] < coordSet[3]
+            ) {
+                console.log('in');
+                props.changeLegend(index);
+            }
+        }
     };
 
     return (
