@@ -5,6 +5,7 @@ function Puzzle(props) {
         console.log(event.nativeEvent.offsetX);
         console.log(event.nativeEvent.offsetY);
     };
+
     return (
         <div id="puzzle">
             {props.isActive && (

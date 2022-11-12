@@ -19,9 +19,36 @@ function Nav(props) {
         <nav>
             <div id="key">
                 <span>FIND THESE</span>
-                <img src={props.puzzle.legendA} alt="hint A"></img>
-                <img src={props.puzzle.legendB} alt="hint B"></img>
-                <img src={props.puzzle.legendC} alt="hint C"></img>
+                <div className="legendPicDiv">
+                    <img src={props.puzzle.legendA} alt="hint A"></img>
+                    {props.puzzle.coordsA[0] && (
+                        <img
+                            className="checkmark"
+                            alt="checkmark"
+                            src="images/checkmark.png"
+                        ></img>
+                    )}
+                </div>
+                <div className="legendPicDiv">
+                    <img src={props.puzzle.legendB} alt="hint B"></img>
+                    {props.puzzle.coordsB[0] && (
+                        <img
+                            className="checkmark"
+                            alt="checkmark"
+                            src="images/checkmark.png"
+                        ></img>
+                    )}
+                </div>
+                <div className="legendPicDiv">
+                    <img src={props.puzzle.legendC} alt="hint C"></img>
+                    {props.puzzle.coordsC[0] && (
+                        <img
+                            className="checkmark"
+                            alt="checkmark"
+                            src="images/checkmark.png"
+                        ></img>
+                    )}
+                </div>
             </div>
             <div id="timer">
                 {props.isActive && <span>{time}</span>}

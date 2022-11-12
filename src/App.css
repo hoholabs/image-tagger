@@ -30,6 +30,15 @@ nav #timer {
 nav #highscore {
     background-color: red;
 }
+nav .legendPicDiv {
+    position: relative;
+}
+nav .checkmark {
+    height: 50px;
+    position: absolute;
+    left: 30%;
+    bottom: 20%;
+}
 
 #puzzle {
     border: solid green 2px;
