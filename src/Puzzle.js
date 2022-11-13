@@ -1,12 +1,14 @@
 import React from 'react';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase';
 
 function Puzzle(props) {
-    const sendCoords = (event) => {
-        let coordsArray = [
-            props.puzzle.coordsA,
-            props.puzzle.coordsB,
-            props.puzzle.coordsC
-        ];
+    async function checkCoords(event) {
+        const docRef = doc(db, 'puzzles', props.puzzle.name);
+        const docSnap = await getDoc(docRef);
+        const info = docSnap.data();
+
+        let coordsArray = [info.coordsA, info.coordsB, info.coordsC];
         let clickCoords = [
             event.nativeEvent.offsetX,
             event.nativeEvent.offsetY
@@ -24,13 +26,13 @@ function Puzzle(props) {
                 props.changeLegend(index);
             }
         }
-    };
+    }
 
     return (
         <div id="puzzle">
             {props.isActive && (
                 <img
-                    onClick={sendCoords}
+                    onClick={checkCoords}
                     src={props.puzzle.img}
                     alt="hidden object puzzle"
                 ></img>

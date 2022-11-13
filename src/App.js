@@ -10,9 +10,10 @@ function App() {
     const [isActive, setIsActive] = useState(false);
     //later, to add more puzzles, add a default/info screen
 
-    const changePuzzle = (puzzle) => {
+    function loadPuzzle(puzzle) {
         setPuzzle(puzzle);
-    };
+        // console.log(puzzle);
+    }
 
     const startPuzzle = () => {
         setIsActive(true);
@@ -24,10 +25,15 @@ function App() {
         setLegend(oldLegend);
     };
 
+    // loadPuzzle(puzzle);
+    useState(() => {
+        loadPuzzle(puzzle);
+    });
+
     return (
         <div className="App">
             <Nav
-                changePuzzle={changePuzzle}
+                loadPuzzle={loadPuzzle}
                 puzzle={puzzle}
                 legend={legend}
                 startPuzzle={startPuzzle}
