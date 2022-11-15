@@ -37,7 +37,7 @@ function Nav(props) {
                 </div>
             </div>
             <div id="timer">
-                {props.isActive && <span>{props.time}</span>}
+                {<span>{props.time.toFixed(1)}</span>}
                 {!props.isActive && (
                     <button onClick={props.startPuzzle}>START</button>
                 )}

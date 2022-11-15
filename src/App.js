@@ -10,26 +10,6 @@ function App() {
     const [isActive, setIsActive] = useState(false);
     const [time, setTime] = useState(0);
 
-    useEffect(() => {
-        let interval = null;
-        if (isActive) {
-            interval = setInterval(() => {
-                let newTime = time + 1;
-                setTime(newTime);
-            }, 1000);
-        } else if (!isActive && time !== 0) {
-            clearInterval(interval);
-        }
-        return () => clearInterval(interval);
-    }, [isActive, time]);
-
-    useEffect(() => {
-        if (checkLegend()) {
-            console.log(time);
-            setIsActive(false);
-        }
-    }, [legend]);
-
     const checkLegend = () => {
         for (let index = 0; index < legend.length; index++) {
             const element = legend[index];
@@ -40,9 +20,9 @@ function App() {
         return true;
     };
 
-    function loadPuzzle(puzzle) {
+    const loadPuzzle = (puzzle) => {
         setPuzzle(puzzle);
-    }
+    };
 
     const startPuzzle = () => {
         setIsActive(true);
@@ -58,6 +38,25 @@ function App() {
         loadPuzzle(puzzle);
     });
 
+    useEffect(() => {
+        let interval = null;
+        if (isActive) {
+            interval = setInterval(() => {
+                let newTime = Math.round((time + 0.1) * 10) / 10;
+                setTime(newTime);
+            }, 100);
+        } else if (!isActive && time !== 0) {
+            clearInterval(interval);
+        }
+        return () => clearInterval(interval);
+    }, [isActive, time]);
+
+    useEffect(() => {
+        if (checkLegend()) {
+            setIsActive(false);
+        }
+    }, [legend]);
+
     return (
         <div className="App">
             <Nav
@@ -68,13 +67,15 @@ function App() {
                 isActive={isActive}
                 time={time}
             />
-            <Puzzle
-                puzzle={puzzle}
-                time={time}
-                startPuzzle={startPuzzle}
-                isActive={isActive}
-                changeLegend={changeLegend}
-            />
+            {isActive && (
+                <Puzzle
+                    puzzle={puzzle}
+                    time={time}
+                    startPuzzle={startPuzzle}
+                    isActive={isActive}
+                    changeLegend={changeLegend}
+                />
+            )}
         </div>
     );
 }

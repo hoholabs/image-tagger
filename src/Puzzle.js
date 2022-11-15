@@ -29,13 +29,11 @@ function Puzzle(props) {
 
     return (
         <div id="puzzle">
-            {props.isActive && (
-                <img
-                    onClick={checkCoords}
-                    src={props.puzzle.img}
-                    alt="hidden object puzzle"
-                ></img>
-            )}
+            <img
+                onClick={checkCoords}
+                src={props.puzzle.img}
+                alt="hidden object puzzle"
+            ></img>
         </div>
     );
 }
