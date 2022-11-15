@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import Nav from './Nav';
 import Puzzle from './Puzzle';
+import Scores from './Scores';
 import playground from './Puzzles/Playground';
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
                     changeLegend={changeLegend}
                 />
             )}
+            {!isActive && <Scores puzzle={puzzle} />}
         </div>
     );
 }

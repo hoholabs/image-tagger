@@ -1,5 +1,5 @@
 const playground = {
-    name: 'Playground',
+    name: 'playground',
     img: 'images/playground-img.jpg',
     legendA: 'images/playground-a.jpg',
     coordsA: [100, 160, 530, 565],
