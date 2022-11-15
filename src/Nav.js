@@ -1,20 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 function Nav(props) {
-    const [time, setTime] = useState(0);
-
-    useEffect(() => {
-        let interval = null;
-        if (props.isActive) {
-            interval = setInterval(() => {
-                setTime((time) => time + 1);
-            }, 1000);
-        } else if (!props.isActive && time !== 0) {
-            clearInterval(interval);
-        }
-        return () => clearInterval(interval);
-    }, [props.isActive, time]);
-
     return (
         <nav>
             <div id="key">
@@ -51,7 +37,7 @@ function Nav(props) {
                 </div>
             </div>
             <div id="timer">
-                {props.isActive && <span>{time}</span>}
+                {props.isActive && <span>{props.time}</span>}
                 {!props.isActive && (
                     <button onClick={props.startPuzzle}>START</button>
                 )}

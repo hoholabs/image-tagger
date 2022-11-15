@@ -22,7 +22,6 @@ function Puzzle(props) {
                 coordSet[2] < clickCoords[1] &&
                 clickCoords[1] < coordSet[3]
             ) {
-                console.log('in');
                 props.changeLegend(index);
             }
         }
