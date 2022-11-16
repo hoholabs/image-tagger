@@ -10,7 +10,7 @@ function Scores(props) {
         const docSnap = await getDoc(docRef);
         const userData = docSnap.data();
         const puzzleName = props.puzzle.name.toString();
-        console.log(userData[puzzleName]);
+        // console.log(userData[puzzleName]);
         setHighScore(userData[puzzleName]);
     }
 

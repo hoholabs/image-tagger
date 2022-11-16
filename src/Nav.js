@@ -1,4 +1,5 @@
 import React from 'react';
+import Auth from './Auth';
 
 function Nav(props) {
     return (
@@ -43,6 +44,7 @@ function Nav(props) {
                 )}
             </div>
             <div id="highscore">highscore</div>
+            <Auth />
         </nav>
     );
 }
