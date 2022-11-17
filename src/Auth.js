@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { auth } from './firebase';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     GoogleAuthProvider,
-    signInWithRedirect
+    signInWithRedirect,
+    onAuthStateChanged,
+    signOut
 } from 'firebase/auth';
 
 function Auth(props) {
@@ -17,6 +19,8 @@ function Auth(props) {
     const [inputValues, setInputValues] = useState(defaultValues);
     const [signIn, setSignIn] = useState(false);
     const [signUp, setSignUp] = useState(false);
+    const [user, setUser] = useState();
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const handleChange = (event) => {
         console.log(inputValues);
@@ -35,19 +39,19 @@ function Auth(props) {
         )
             .then((userCredential) => {
                 // Signed in
-                const user = userCredential.user;
+                setUser(userCredential.user);
                 // ...
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                // const errorCode = error.code;
+                // const errorMessage = error.message;
                 // ..
             });
     };
 
     const handleSignIn = (event) => {
         event.preventDefault();
-        console.log(auth);
+
         signInWithEmailAndPassword(
             auth,
             inputValues.email,
@@ -55,16 +59,42 @@ function Auth(props) {
         )
             .then((userCredential) => {
                 // Signed in
-                const user = userCredential.user;
-                console.log(auth);
-                console.log(user);
+                setUser(userCredential.user);
+                setSignIn(true);
                 // ...
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
+                // const errorCode = error.code;
+                // const errorMessage = error.message;
             });
     };
+
+    const handleSignOut = () => {
+        signOut(auth)
+            .then(() => {
+                // Sign-out successful.
+            })
+            .catch((error) => {
+                // An error happened.
+            });
+    };
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                const uid = user.uid;
+                console.log(uid);
+                setLoggedIn(true);
+                // ...
+            } else {
+                // User is signed out
+                setLoggedIn(false);
+                // ...
+            }
+        });
+    }, [user]);
     return (
         <div>
             <button
@@ -74,7 +104,7 @@ function Auth(props) {
             >
                 googz
             </button>
-            {!signIn && !signUp && (
+            {!loggedIn && !signUp && !signIn && (
                 <div>
                     <button
                         onClick={() => {
@@ -132,6 +162,7 @@ function Auth(props) {
                     <input type="submit" name="signIn" value="Sign In"></input>
                 </form>
             )}
+            {loggedIn && <button onClick={handleSignOut}>Sign Out</button>}
         </div>
     );
 }
