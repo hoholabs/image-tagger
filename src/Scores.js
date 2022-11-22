@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
 function Scores(props) {
     const [highScore, setHighScore] = useState('--');
 
-    async function getScores() {
-        const docRef = doc(db, 'users', 'hoho');
-        const docSnap = await getDoc(docRef);
-        const userData = docSnap.data();
-        const puzzleName = props.puzzle.name.toString();
-        // console.log(userData[puzzleName]);
-        setHighScore(userData[puzzleName]);
-    }
+    useEffect(() => {
+        async function getScores() {
+            console.log(props.userInfo.uid);
+            if (props.userInfo.uid) {
+                // console.log(props.userInfo.uid);
+                const docRef = doc(db, 'users', props.userInfo.uid);
+                const docSnap = await getDoc(docRef);
+                const userData = docSnap.data();
+                const puzzleName = props.puzzle.name.toString();
+                setHighScore(userData[puzzleName]);
+            }
+        }
 
-    useState(() => {
         getScores();
-    });
+    }, [props.puzzle.name, props.userInfo.uid]);
 
     return (
         <div>

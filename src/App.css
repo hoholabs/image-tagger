@@ -1,3 +1,7 @@
+:root {
+    background-color: grey;
+}
+
 nav {
     border: solid red 2px;
     display: grid;
@@ -29,6 +33,10 @@ nav #timer {
 
 nav #highscore {
     background-color: red;
+}
+
+nav #key {
+    background: rgb(188, 188, 188);
 }
 nav .legendPicDiv {
     position: relative;

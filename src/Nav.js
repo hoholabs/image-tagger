@@ -43,8 +43,8 @@ function Nav(props) {
                     <button onClick={props.startPuzzle}>START</button>
                 )}
             </div>
-            <div id="highscore">highscore</div>
-            <Auth />
+            {/* <div id="highscore">highscore</div> */}
+            <Auth setUserInfo={props.setUserInfo} userInfo={props.userInfo} />
         </nav>
     );
 }

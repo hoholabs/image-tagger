@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from './firebase';
+import { db, auth } from './firebase';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -79,15 +80,32 @@ function Auth(props) {
             });
     };
 
+    async function createUser(uid) {
+        const docRef = doc(db, 'users', uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            console.log('Document data:', docSnap.data());
+        } else {
+            // doc.data() will be undefined in this case
+            console.log('No such document!');
+            await setDoc(doc(db, 'users', uid), {});
+        }
+    }
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
+                //User is signed in
+
                 const uid = user.uid;
-                console.log(uid);
+
                 setLoggedIn(true);
-                // ...
+                let prevUserInfo = props.userInfo;
+                prevUserInfo.uid = uid;
+                props.setUserInfo(prevUserInfo);
+                console.log(props.userInfo);
+                createUser(uid);
             } else {
                 // User is signed out
                 setLoggedIn(false);
@@ -97,13 +115,6 @@ function Auth(props) {
     }, [user]);
     return (
         <div>
-            <button
-                onClick={() => {
-                    signInWithRedirect(auth, provider);
-                }}
-            >
-                googz
-            </button>
             {!loggedIn && !signUp && !signIn && (
                 <div>
                     <button
@@ -125,42 +136,62 @@ function Auth(props) {
             {/* Can probbaly shorten this later
             Should be able to do signUp and signIn as the same form? */}
             {signUp && (
-                <form name="signUp" onSubmit={handleSignUp}>
-                    <input
-                        value={inputValues.email}
-                        onChange={handleChange}
-                        name="email"
-                        type="text"
-                        placeholder="email"
-                    ></input>
-                    <input
-                        value={inputValues.password}
-                        onChange={handleChange}
-                        type="password"
-                        name="password"
-                        placeholder="password"
-                    ></input>
-                    <input type="submit" name="signUp" value="Sign up"></input>
-                </form>
+                <div>
+                    <form name="signUp" onSubmit={handleSignUp}>
+                        <input
+                            value={inputValues.email}
+                            onChange={handleChange}
+                            name="email"
+                            type="text"
+                            placeholder="email"
+                        ></input>
+                        <input
+                            value={inputValues.password}
+                            onChange={handleChange}
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                        ></input>
+                        <input
+                            type="submit"
+                            name="signUp"
+                            value="Sign up"
+                        ></input>
+                    </form>
+                </div>
             )}
             {signIn && (
-                <form name="signIn" onSubmit={handleSignIn}>
-                    <input
-                        value={inputValues.email}
-                        onChange={handleChange}
-                        name="email"
-                        type="text"
-                        placeholder="email"
-                    ></input>
-                    <input
-                        value={inputValues.password}
-                        onChange={handleChange}
-                        type="password"
-                        name="password"
-                        placeholder="password"
-                    ></input>
-                    <input type="submit" name="signIn" value="Sign In"></input>
-                </form>
+                <div>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            signInWithRedirect(auth, provider);
+                        }}
+                    >
+                        Sign In With Google
+                    </button>
+                    <form name="signIn" onSubmit={handleSignIn}>
+                        <input
+                            value={inputValues.email}
+                            onChange={handleChange}
+                            name="email"
+                            type="text"
+                            placeholder="email"
+                        ></input>
+                        <input
+                            value={inputValues.password}
+                            onChange={handleChange}
+                            type="password"
+                            name="password"
+                            placeholder="password"
+                        ></input>
+                        <input
+                            type="submit"
+                            name="signIn"
+                            value="Sign In"
+                        ></input>
+                    </form>
+                </div>
             )}
             {loggedIn && <button onClick={handleSignOut}>Sign Out</button>}
         </div>

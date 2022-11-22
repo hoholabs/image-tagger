@@ -10,6 +10,11 @@ function App() {
     const [legend, setLegend] = useState([false, false, false]);
     const [isActive, setIsActive] = useState(false);
     const [time, setTime] = useState(0);
+    const [userInfo, setUserInfo] = useState({
+        username: false,
+        picture: false,
+        uid: false
+    });
 
     const checkLegend = () => {
         for (let index = 0; index < legend.length; index++) {
@@ -67,6 +72,8 @@ function App() {
                 startPuzzle={startPuzzle}
                 isActive={isActive}
                 time={time}
+                setUserInfo={setUserInfo}
+                userInfo={userInfo}
             />
             {isActive && (
                 <Puzzle
@@ -77,7 +84,7 @@ function App() {
                     changeLegend={changeLegend}
                 />
             )}
-            {!isActive && <Scores puzzle={puzzle} />}
+            {!isActive && <Scores userInfo={userInfo} puzzle={puzzle} />}
         </div>
     );
 }
