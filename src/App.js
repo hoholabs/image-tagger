@@ -16,16 +16,6 @@ function App() {
         uid: false
     });
 
-    const checkLegend = () => {
-        for (let index = 0; index < legend.length; index++) {
-            const element = legend[index];
-            if (element === false) {
-                return false;
-            }
-        }
-        return true;
-    };
-
     const loadPuzzle = (puzzle) => {
         setPuzzle(puzzle);
     };
@@ -58,6 +48,15 @@ function App() {
     }, [isActive, time]);
 
     useEffect(() => {
+        const checkLegend = () => {
+            for (let index = 0; index < legend.length; index++) {
+                const element = legend[index];
+                if (element === false) {
+                    return false;
+                }
+            }
+            return true;
+        };
         if (checkLegend()) {
             setIsActive(false);
         }

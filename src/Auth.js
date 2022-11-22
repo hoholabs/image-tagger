@@ -112,7 +112,7 @@ function Auth(props) {
                 // ...
             }
         });
-    }, [user]);
+    }, [props, user]);
     return (
         <div>
             {!loggedIn && !signUp && !signIn && (
