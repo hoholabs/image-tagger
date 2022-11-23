@@ -10,7 +10,7 @@ import {
     signOut
 } from 'firebase/auth';
 
-function Auth(props) {
+function Auth({ userInfo, setUserInfo }) {
     const provider = new GoogleAuthProvider();
 
     const defaultValues = {
@@ -101,10 +101,12 @@ function Auth(props) {
                 const uid = user.uid;
 
                 setLoggedIn(true);
-                let prevUserInfo = props.userInfo;
-                prevUserInfo.uid = uid;
-                props.setUserInfo(prevUserInfo);
-                console.log(props.userInfo);
+
+                setUserInfo({
+                    ...userInfo,
+                    uid: uid
+                });
+
                 createUser(uid);
             } else {
                 // User is signed out
@@ -112,7 +114,7 @@ function Auth(props) {
                 // ...
             }
         });
-    }, [props, user]);
+    }, [setUserInfo, user]);
     return (
         <div>
             {!loggedIn && !signUp && !signIn && (
