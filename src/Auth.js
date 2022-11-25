@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { db, auth } from './firebase';
+import { db } from './firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     GoogleAuthProvider,
+    getAuth,
     signInWithRedirect,
     onAuthStateChanged,
     signOut
 } from 'firebase/auth';
 
 function Auth({ userInfo, setUserInfo }) {
-    const provider = new GoogleAuthProvider();
-
     const defaultValues = {
         email: '',
         password: ''
@@ -24,7 +23,6 @@ function Auth({ userInfo, setUserInfo }) {
     const [loggedIn, setLoggedIn] = useState(false);
 
     const handleChange = (event) => {
-        console.log(inputValues);
         setInputValues({
             ...inputValues,
             [event.target.name]: event.target.value
@@ -33,6 +31,8 @@ function Auth({ userInfo, setUserInfo }) {
 
     const handleSignUp = (event) => {
         event.preventDefault();
+        const auth = getAuth();
+
         createUserWithEmailAndPassword(
             auth,
             inputValues.email,
@@ -44,14 +44,17 @@ function Auth({ userInfo, setUserInfo }) {
                 // ...
             })
             .catch((error) => {
-                // const errorCode = error.code;
-                // const errorMessage = error.message;
+                const errorCode = error.code;
+                console.log(errorCode);
+                const errorMessage = error.message;
+                console.log(errorMessage);
                 // ..
             });
     };
 
     const handleSignIn = (event) => {
         event.preventDefault();
+        const auth = getAuth();
 
         signInWithEmailAndPassword(
             auth,
@@ -61,16 +64,18 @@ function Auth({ userInfo, setUserInfo }) {
             .then((userCredential) => {
                 // Signed in
                 setUser(userCredential.user);
-                setSignIn(true);
-                // ...
             })
             .catch((error) => {
-                // const errorCode = error.code;
-                // const errorMessage = error.message;
+                const errorCode = error.code;
+                console.log(errorCode);
+                const errorMessage = error.message;
+                console.log(errorMessage);
             });
     };
 
     const handleSignOut = () => {
+        const auth = getAuth();
+
         signOut(auth)
             .then(() => {
                 // Sign-out successful.
@@ -94,6 +99,8 @@ function Auth({ userInfo, setUserInfo }) {
     }
 
     useEffect(() => {
+        const auth = getAuth();
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 //User is signed in
@@ -114,87 +121,108 @@ function Auth({ userInfo, setUserInfo }) {
                 // ...
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setUserInfo, user]);
     return (
-        <div>
-            {!loggedIn && !signUp && !signIn && (
-                <div>
+        <div id="auth">
+            {/* not logged in, signUp not activates signIn not activated */}
+            {!loggedIn && !signUp && (
+                <div id="signIn">
+                    {' '}
+                    <span>Sign In</span>
+                    {/* Google sign in button */}
+                    {!signIn && (
+                        <button
+                            id="googleSignIn"
+                            type="button"
+                            onClick={() => {
+                                const provider = new GoogleAuthProvider();
+                                const auth = getAuth();
+
+                                signInWithRedirect(auth, provider);
+                            }}
+                        >
+                            Google
+                        </button>
+                    )}
+                    {/* Email sign in button */}
+                    {!signIn && (
+                        <button
+                            id="emailSignIn"
+                            onClick={() => {
+                                setSignIn(true);
+                            }}
+                        >
+                            Email
+                        </button>
+                    )}
+                    {/* Email sign in form */}
+                    {signIn && (
+                        <form name="signIn" onSubmit={handleSignIn}>
+                            <input
+                                value={inputValues.email}
+                                onChange={handleChange}
+                                name="email"
+                                type="text"
+                                placeholder="email"
+                            ></input>
+                            <input
+                                value={inputValues.password}
+                                onChange={handleChange}
+                                type="password"
+                                name="password"
+                                placeholder="password"
+                            ></input>
+                            <input
+                                type="submit"
+                                name="signIn"
+                                value="Sign In"
+                            ></input>
+                        </form>
+                    )}
+                </div>
+            )}
+
+            <div id="signUp">
+                {/* Email sign up button */}
+                {!signUp && !signIn && !loggedIn && (
                     <button
-                        onClick={() => {
-                            setSignIn(true);
-                        }}
-                    >
-                        Sign In
-                    </button>
-                    <button
+                        id="emailSignUp"
                         onClick={() => {
                             setSignUp(true);
                         }}
                     >
-                        Sign Up
+                        Sign Up with Email
                     </button>
-                </div>
-            )}
-            {/* Can probbaly shorten this later
-            Should be able to do signUp and signIn as the same form? */}
-            {signUp && (
-                <div>
-                    <form name="signUp" onSubmit={handleSignUp}>
-                        <input
-                            value={inputValues.email}
-                            onChange={handleChange}
-                            name="email"
-                            type="text"
-                            placeholder="email"
-                        ></input>
-                        <input
-                            value={inputValues.password}
-                            onChange={handleChange}
-                            type="password"
-                            name="password"
-                            placeholder="password"
-                        ></input>
-                        <input
-                            type="submit"
-                            name="signUp"
-                            value="Sign up"
-                        ></input>
-                    </form>
-                </div>
-            )}
-            {signIn && (
-                <div>
-                    <button
-                        type="button"
-                        onClick={() => {
-                            signInWithRedirect(auth, provider);
-                        }}
-                    >
-                        Sign In With Google
-                    </button>
-                    <form name="signIn" onSubmit={handleSignIn}>
-                        <input
-                            value={inputValues.email}
-                            onChange={handleChange}
-                            name="email"
-                            type="text"
-                            placeholder="email"
-                        ></input>
-                        <input
-                            value={inputValues.password}
-                            onChange={handleChange}
-                            type="password"
-                            name="password"
-                            placeholder="password"
-                        ></input>
-                        <input
-                            type="submit"
-                            name="signIn"
-                            value="Sign In"
-                        ></input>
-                    </form>
-                </div>
-            )}
+                )}
+                {/*signUp with email form */}
+                {signUp && (
+                    <div>
+                        <form name="signUp" onSubmit={handleSignUp}>
+                            <input
+                                value={inputValues.email}
+                                onChange={handleChange}
+                                name="email"
+                                type="text"
+                                placeholder="email"
+                            ></input>
+                            <input
+                                value={inputValues.password}
+                                onChange={handleChange}
+                                type="password"
+                                name="password"
+                                placeholder="password"
+                            ></input>
+                            <input
+                                type="submit"
+                                name="signUp"
+                                value="Sign up"
+                            ></input>
+                        </form>
+                    </div>
+                )}
+            </div>
+            {/* loggedIn Activted */}
             {loggedIn && <button onClick={handleSignOut}>Sign Out</button>}
         </div>
     );

@@ -2,7 +2,12 @@
     background-color: grey;
 }
 
+.material {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
 nav {
+    height: 100;
     border: solid red 2px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -46,6 +51,45 @@ nav .checkmark {
     position: absolute;
     left: 30%;
     bottom: 20%;
+}
+
+nav #auth {
+    border: solid black 2px;
+    background-color: aquamarine;
+    border-radius: 5px;
+    display: grid;
+
+    width: 200px;
+    justify-items: center;
+}
+
+nav #auth button {
+    background-color: blanchedalmond;
+    border: solid black 1px;
+}
+
+nav #signIn {
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    align-items: center;
+    /* border: solid black 2px; */
+}
+
+nav #signIn span {
+    grid-column: 1 /-1;
+}
+
+nav #signUp {
+    display: grid;
+
+    width: 100%;
+    border-top: solid black 2px;
+    justify-items: center;
+    align-items: center;
 }
 
 #puzzle {
