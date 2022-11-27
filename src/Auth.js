@@ -128,8 +128,6 @@ function Auth({ userInfo, setUserInfo }) {
             {/* not logged in, signUp not activates signIn not activated */}
             {!loggedIn && !signUp && (
                 <div id="signIn">
-                    {' '}
-                    <span>Sign In</span>
                     {/* Google sign in button */}
                     {!signIn && (
                         <button
@@ -142,7 +140,7 @@ function Auth({ userInfo, setUserInfo }) {
                                 signInWithRedirect(auth, provider);
                             }}
                         >
-                            Google
+                            <img src="images/btn_google_signin_light_normal_web.png"></img>
                         </button>
                     )}
                     {/* Email sign in button */}
@@ -153,7 +151,7 @@ function Auth({ userInfo, setUserInfo }) {
                                 setSignIn(true);
                             }}
                         >
-                            Email
+                            Sign in with Email
                         </button>
                     )}
                     {/* Email sign in form */}
