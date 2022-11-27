@@ -32,14 +32,11 @@ nav #key {
 }
 
 nav #key span {
-    /* justify-self: center; */
     grid-column: 1/-1;
 }
 
 nav #timer {
     display: grid;
-    /* justify-content: center; */
-    /* align-items: center; */
 }
 nav #timer button {
     height: 50px;
@@ -52,7 +49,6 @@ nav #timer button {
 nav #blank-timer-div {
     height: 50px;
     font-size: 30px;
-    /* background-color: aquamarine; */
     border: none;
     border-radius: 5px;
 }
@@ -90,8 +86,6 @@ nav .checkmark {
 }
 
 nav #auth {
-    /* border: solid black 2px; */
-    /* background-color: aquamarine; */
     border-radius: 5px;
     display: grid;
     width: 200px;
@@ -100,7 +94,6 @@ nav #auth {
 
 nav #auth button {
     background-color: rgb(255, 255, 255);
-    /* border: solid black 1px; */
     border: none;
     margin: 5px;
     width: 185px;
@@ -128,7 +121,6 @@ nav #signIn span {
 nav #signUp {
     display: grid;
     width: 100%;
-    /* border-top: solid black 2px; */
     justify-items: center;
     align-items: center;
 }
@@ -137,4 +129,9 @@ nav #signUp {
     border: solid green 2px;
     display: grid;
     justify-items: center;
+}
+
+#score-card {
+    border: solid green 2px;
+    display: grid;
 }

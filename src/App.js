@@ -83,7 +83,14 @@ function App() {
                     changeLegend={changeLegend}
                 />
             )}
-            {!isActive && <Scores userInfo={userInfo} puzzle={puzzle} />}
+            {!isActive && (
+                <Scores
+                    userInfo={userInfo}
+                    puzzle={puzzle}
+                    time={time}
+                    isActive={isActive}
+                />
+            )}
         </div>
     );
 }
