@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Auth from './Auth';
 
 function Nav(props) {
+    const [displayTime, setDisplayTime] = useState(props.time);
+
+    useEffect(() => {
+        let editedTime = props.time.toFixed(1);
+        let stringTime = editedTime.toString();
+        console.log(stringTime);
+
+        if (editedTime < 10) {
+            stringTime = '00' + stringTime;
+        } else if (editedTime < 100) {
+            stringTime = '0' + stringTime;
+        }
+        setDisplayTime(stringTime);
+    }, [props.time]);
+
     return (
         <nav>
             <div id="key">
@@ -38,10 +53,11 @@ function Nav(props) {
                 </div>
             </div>
             <div id="timer">
-                {<span>{props.time.toFixed(1)}</span>}
+                {<div id="clock">{displayTime}</div>}
                 {!props.isActive && (
-                    <button onClick={props.startPuzzle}>START</button>
+                    <button onClick={props.startPuzzle}>GO</button>
                 )}
+                {props.isActive && <div id="blank-timer-div"></div>}
             </div>
             {/* <div id="highscore">highscore</div> */}
             <Auth setUserInfo={props.setUserInfo} userInfo={props.userInfo} />

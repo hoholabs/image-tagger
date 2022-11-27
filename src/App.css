@@ -1,11 +1,21 @@
 :root {
-    background-color: grey;
+    --main-bg: #d7ddd7;
+    --sub-bg: #8c948c;
+    background-color: var(--main-bg);
+}
+
+@font-face {
+    font-family: 'DSEG';
+    src: local('DSEG'),
+        url('./fonts/DSEG7-Classic-MINI/DSEG7ClassicMini-Regular.ttf')
+            format('truetype');
+    font-weight: normal;
 }
 
 nav {
     height: 100;
-    border: solid red 2px;
     display: grid;
+    background-color: var(--sub-bg);
     grid-template-columns: 1fr 1fr 1fr;
     margin-top: auto;
     margin-bottom: auto;
@@ -28,8 +38,36 @@ nav #key span {
 
 nav #timer {
     display: grid;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+nav #timer button {
+    height: 50px;
+    font-size: 30px;
+    background-color: aquamarine;
+    border: none;
+    border-radius: 5px;
+}
+
+nav #blank-timer-div {
+    height: 50px;
+    font-size: 30px;
+    /* background-color: aquamarine; */
+    border: none;
+    border-radius: 5px;
+}
+
+nav #clock {
+    font-family: 'DSEG';
+    font-size: 30px;
+    border-radius: 5px;
+    height: 50px;
+    line-height: 50px;
+    width: 100px;
+    background-color: rgb(45, 45, 45);
+    color: rgb(255, 72, 0);
+    text-align: center;
+    margin-top: auto;
 }
 
 nav #highscore {
@@ -37,7 +75,9 @@ nav #highscore {
 }
 
 nav #key {
-    background: rgb(188, 188, 188);
+    background: var(--main-bg);
+    border-radius: 10px;
+    border: solid 2px black;
 }
 nav .legendPicDiv {
     position: relative;
@@ -50,8 +90,8 @@ nav .checkmark {
 }
 
 nav #auth {
-    border: solid black 2px;
-    background-color: aquamarine;
+    /* border: solid black 2px; */
+    /* background-color: aquamarine; */
     border-radius: 5px;
     display: grid;
     width: 200px;
@@ -59,13 +99,17 @@ nav #auth {
 }
 
 nav #auth button {
-    background-color: white;
-    border: solid black 1px;
+    background-color: rgb(255, 255, 255);
+    /* border: solid black 1px; */
+    border: none;
+    margin: 5px;
+    width: 185px;
+    height: 40px;
     padding: 0;
-    width: 191px;
-    height: 46px;
-    border-radius: 10px;
-    margin: 1px;
+    border-radius: 5px;
+    justify-self: center;
+    align-self: center;
+    background-position: center;
 }
 
 nav #signIn {

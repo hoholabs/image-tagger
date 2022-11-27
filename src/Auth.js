@@ -22,6 +22,8 @@ function Auth({ userInfo, setUserInfo }) {
     const [user, setUser] = useState();
     const [loggedIn, setLoggedIn] = useState(false);
 
+    const googleSignInButtonImage = require('./images/btn_google_signin_light_normal_web.png');
+
     const handleChange = (event) => {
         setInputValues({
             ...inputValues,
@@ -123,6 +125,10 @@ function Auth({ userInfo, setUserInfo }) {
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [setUserInfo, user]);
+
+    const googleButtonStyle = {
+        backgroundImage: `url(${googleSignInButtonImage})`
+    };
     return (
         <div id="auth">
             {/* not logged in, signUp not activates signIn not activated */}
@@ -131,6 +137,7 @@ function Auth({ userInfo, setUserInfo }) {
                     {/* Google sign in button */}
                     {!signIn && (
                         <button
+                            style={googleButtonStyle}
                             id="googleSignIn"
                             type="button"
                             onClick={() => {
@@ -140,7 +147,10 @@ function Auth({ userInfo, setUserInfo }) {
                                 signInWithRedirect(auth, provider);
                             }}
                         >
-                            <img src="images/btn_google_signin_light_normal_web.png"></img>
+                            {/* <img
+                                alt="Sign in with Google"
+                                src="images/btn_google_signin_light_normal_web.png"
+                            ></img> */}
                         </button>
                     )}
                     {/* Email sign in button */}
