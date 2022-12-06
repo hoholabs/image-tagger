@@ -5,7 +5,7 @@ import Puzzle from './Puzzle';
 import Scores from './Scores';
 import playground from './Puzzles/Playground';
 import { db } from './firebase';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, setDoc, getDoc } from 'firebase/firestore';
 
 function App() {
     const [puzzle, setPuzzle] = useState(playground);
@@ -52,6 +52,33 @@ function App() {
             setHighScore(time);
         }
     }
+
+    async function initPuzzle(puzzle) {
+        console.log(puzzle);
+
+        const docData = {
+            highScores: {
+                Hoho: 42,
+                Cher: 41,
+                Sonny: 96,
+                Ralph: 44,
+                Donyol: 13,
+                DJKaz: 86,
+                Kelso: 101,
+                Poncho: 7,
+                Sue: 99,
+                Steve: 69
+            },
+            coords: {
+                A: puzzle.coordsA,
+                B: puzzle.coordsB,
+                C: puzzle.coordsC
+            }
+        };
+        await setDoc(doc(db, 'puzzles', puzzle.name), docData);
+    }
+
+    initPuzzle(playground);
 
     const puzzleFinished = () => {
         setScore(time);

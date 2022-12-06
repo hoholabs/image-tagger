@@ -7,7 +7,7 @@ function Puzzle(props) {
         const docRef = doc(db, 'puzzles', props.puzzle.name);
         const docSnap = await getDoc(docRef);
         const info = docSnap.data();
-        let coordsArray = [info.coordsA, info.coordsB, info.coordsC];
+        let coordsArray = [info.coords.A, info.coords.B, info.coords.C];
         let clickCoords = [
             event.nativeEvent.offsetX,
             event.nativeEvent.offsetY
