@@ -5,7 +5,7 @@ import Puzzle from './Puzzle';
 import Scores from './Scores';
 import playground from './Puzzles/Playground';
 import { db } from './firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
 
 function App() {
     const [puzzle, setPuzzle] = useState(playground);
@@ -17,7 +17,7 @@ function App() {
         picture: false,
         uid: false
     });
-    const [highScore, setHighScore] = useState('--');
+    const [highScore, setHighScore] = useState(false);
     const [score, setScore] = useState(false);
 
     const loadPuzzle = (puzzle) => {
@@ -25,6 +25,8 @@ function App() {
     };
 
     const startPuzzle = () => {
+        setLegend([false, false, false]);
+        setTime(0);
         setIsActive(true);
     };
 
@@ -35,15 +37,29 @@ function App() {
     };
 
     async function updateHighScore() {
-        const docRef = doc(db, 'users', userInfo.uid);
-        await updateDoc(docRef, {
-            highScore: time
-        });
+        //if user is logged in
+        if (userInfo.uid) {
+            const docRef = doc(db, 'users', userInfo.uid);
+            const docSnap = await getDoc(docRef);
+
+            console.log(docSnap.data());
+
+            //update highScore on database
+            await updateDoc(docRef, {
+                highScore: time
+            });
+            //update hoghScore locally
+            setHighScore(time);
+        }
     }
 
     const puzzleFinished = () => {
         setScore(time);
-        if (time < highScore) {
+        if (highScore) {
+            if (time < highScore) {
+                updateHighScore();
+            }
+        } else {
             updateHighScore();
         }
         setIsActive(false);

@@ -96,7 +96,7 @@ function Auth({ userInfo, setUserInfo }) {
         } else {
             // doc.data() will be undefined in this case
             // console.log('No such document!');
-            await setDoc(doc(db, 'users', uid), {});
+            await setDoc(doc(db, 'users', uid), { highScore: false });
         }
     }
 

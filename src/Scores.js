@@ -3,6 +3,10 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
 function Scores({ userInfo, score, isActive, highScore, setHighScore }) {
+    //initialize highScore
+
+    async function initHighScores() {}
+
     //retrieve highScore form firebase
     useEffect(() => {
         async function getScores() {
