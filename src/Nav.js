@@ -7,7 +7,6 @@ function Nav(props) {
     useEffect(() => {
         let editedTime = props.time.toFixed(1);
         let stringTime = editedTime.toString();
-        console.log(stringTime);
 
         if (editedTime < 10) {
             stringTime = '00' + stringTime;

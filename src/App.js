@@ -4,6 +4,8 @@ import Nav from './Nav';
 import Puzzle from './Puzzle';
 import Scores from './Scores';
 import playground from './Puzzles/Playground';
+import { db } from './firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 
 function App() {
     const [puzzle, setPuzzle] = useState(playground);
@@ -15,6 +17,8 @@ function App() {
         picture: false,
         uid: false
     });
+    const [highScore, setHighScore] = useState('--');
+    const [score, setScore] = useState(false);
 
     const loadPuzzle = (puzzle) => {
         setPuzzle(puzzle);
@@ -30,10 +34,25 @@ function App() {
         setLegend(oldLegend);
     };
 
+    async function updateHighScore() {
+        const docRef = doc(db, 'users', userInfo.uid);
+        await updateDoc(docRef, {
+            highScore: time
+        });
+    }
+
+    const puzzleFinished = () => {
+        setScore(time);
+        if (time < highScore) {
+            updateHighScore();
+        }
+        setIsActive(false);
+    };
+    //load puzzle
     useEffect(() => {
         loadPuzzle(puzzle);
     });
-
+    //timer
     useEffect(() => {
         let interval = null;
         if (isActive) {
@@ -47,6 +66,7 @@ function App() {
         return () => clearInterval(interval);
     }, [isActive, time]);
 
+    // checks to see if all items have been found
     useEffect(() => {
         const checkLegend = () => {
             for (let index = 0; index < legend.length; index++) {
@@ -57,8 +77,9 @@ function App() {
             }
             return true;
         };
+
         if (checkLegend()) {
-            setIsActive(false);
+            puzzleFinished();
         }
     }, [legend]);
 
@@ -85,10 +106,12 @@ function App() {
             )}
             {!isActive && (
                 <Scores
+                    highScore={highScore}
+                    setHighScore={setHighScore}
                     userInfo={userInfo}
-                    puzzle={puzzle}
                     time={time}
                     isActive={isActive}
+                    score={score}
                 />
             )}
         </div>
