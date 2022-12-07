@@ -53,22 +53,23 @@ function App() {
         }
     }
 
+    // eslint-disable-next-line no-unused-vars
     async function initPuzzle(puzzle) {
         console.log(puzzle);
 
         const docData = {
-            highScores: {
-                Hoho: 42,
-                Cher: 41,
-                Sonny: 96,
-                Ralph: 44,
-                Donyol: 13,
-                DJKaz: 86,
-                Kelso: 101,
-                Poncho: 7,
-                Sue: 99,
-                Steve: 69
-            },
+            highScores: [
+                { name: 'Poncho', score: 7 },
+                { name: 'Donyol', score: 13 },
+                { name: 'Cher', score: 41 },
+                { name: 'Hoho', score: 42 },
+                { name: 'Ralph', score: 44 },
+                { name: 'Steve', score: 69 },
+                { name: 'DJKaz', score: 86 },
+                { name: 'Sonny', score: 96 },
+                { name: 'Sue', score: 99 },
+                { name: 'Kelso', score: 101 }
+            ],
             coords: {
                 A: puzzle.coordsA,
                 B: puzzle.coordsB,
@@ -77,8 +78,7 @@ function App() {
         };
         await setDoc(doc(db, 'puzzles', puzzle.name), docData);
     }
-
-    initPuzzle(playground);
+    // initPuzzle(playground);
 
     const puzzleFinished = () => {
         setScore(time);
@@ -124,6 +124,7 @@ function App() {
         if (checkLegend()) {
             puzzleFinished();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [legend]);
 
     return (
@@ -155,6 +156,7 @@ function App() {
                     time={time}
                     isActive={isActive}
                     score={score}
+                    puzzle={puzzle}
                 />
             )}
         </div>
